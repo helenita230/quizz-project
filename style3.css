@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url(./IMAGE/dark-background-2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 60%;
+  background-attachment: fixed;
+  font-family: "Roboto";
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-family: "shlop";
+  color: #f26322;
+  display: flex;
+  width: 100%;
+  font-size: 3rem;
+}
+
+.score-panel {
+  background: rgba(28, 28, 29, 0.6);
+  height: 60vh;
+  width: 921px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 3rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 10px;
+  margin-bottom: 50px;
+}
+
+.score-number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right,
+.wrong {
+  font-size: 3rem;
+  margin-bottom: 5px;
+  display: flex;
+  padding: 10px;
+}
+
+.right span {
+  background: rgb(50, 205, 50, 0.6);
+}
+
+.wrong span {
+  background: rgb(255, 0, 0, 0.6);
+}
+
+.right span,
+.wrong span {
+  font-size: 3rem;
+  padding: 0 20px;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+
+.win,
+.loose {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  font-family: "shlop";
+  color: #f26322;
+}
+
+.button {
+  text-decoration: none;
+  padding: 15px 40px;
+  border-radius: 0.5rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: 900;
+  position: absolute;
+  background: #f26322;
+  top: 450px;
+  font-family: "Roboto";
+  margin-top: 80px;
+}
