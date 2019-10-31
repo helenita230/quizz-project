@@ -122,7 +122,20 @@ const myQuestions = [
       a4: "Never go alone in the attic"
     },
     correctAnswer: "Never say I'll be back"
+  },
+  {
+    question: "What's the weapon of the killer in this movie?",
+    image: ["./IMAGE/souviens-toi-ete-dernier.jpg"],
+    answers: {
+      a1: "A Butcher Knife",
+      a2: "An Axe",
+      a3: "A Hook",
+      a4: "A Saw"
+    },
+    correctAnswer: "A Hook"
   }
 ];
 
 export default myQuestions;
+
+

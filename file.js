@@ -1,7 +1,9 @@
 import myQuestions from "./questions.js";
 
 var currentQuestionIndex = 0;
-
+let rightScoreCounter = 0;
+let wrongScoreCounter = 0;
+let gaugeIntervalId;
 displayQuizz();
 
 // function to build quizz with images
@@ -30,16 +32,17 @@ function buildFormImages(question) {
              <p>${question.question}</p>
            </div>
            ${buildImages()}
-           <div class="container time">
+           <div class="container" id="time">
              <div id=progress-time>
                <div class="gauge"></div>
+               <audio id="laugh" src="./MP3/evil-laugh.wav"></audio>
              </div>
            </div>
            <div class="container answers"> ${answers.join("")} </div>
            <div class="footer">
              <div class="score"><span>SCORE:</span>
-               <p class="right"><span>0</span>Correct</p>
-               <p class="wrong"><span>0</span>Wrong</p> 
+               <p class="right"><span id="rightCounter">${rightScoreCounter}</span>Correct</p>
+               <p class="wrong"><span id="wrongCounter">${wrongScoreCounter}</span>Wrong</p> 
           </div>
           <button id="btn_next">Next question</button>
         </main>`
@@ -61,7 +64,7 @@ function buildFormAudio(question) {
   function buildAudio() {
     var str = '<div class="container media">';
     question.audio.forEach(audio => {
-      str += `<audio controls autoplay src="${audio}"></audio>`;
+      str += `<audio controls autoplay src="${audio}" id="audio"></audio>`;
     });
     str += "</div>";
     return str;
@@ -74,16 +77,17 @@ function buildFormAudio(question) {
                <p>${question.question}</p>
              </div>
              ${buildAudio()}
-             <div class="container time">
+             <div class="container" id="time">
              <div id=progress-time>
                <div class="gauge"></div>
+               <audio id="laugh" src="./MP3/evil-laugh.wav"></audio>
              </div>
            </div>
              <div class="container answers"> ${answers.join("")} </div>
            <div class="footer">
              <div class="score"><span>SCORE:</span>
-               <p class="right"><span>0</span>Correct</p>
-               <p class="wrong"><span>0</span>Wrong</p> 
+             <p class="right"><span id="rightCounter">${rightScoreCounter}</span>Correct</p>
+             <p class="wrong"><span id="wrongCounter">${wrongScoreCounter}</span>Wrong</p>  
           </div>
           <button id="btn_next">Next question</button>
         </main>`
@@ -93,22 +97,21 @@ function buildFormAudio(question) {
   return output.join("");
 }
 
+function buildVideo(video, fullScreen, autoplay) {
+  var str = `<div class="container media ${fullScreen}">`;
+  str += `<video controls ${autoplay} src="${video}" class="video ${fullScreen}" preload="auto"></video>`;
+  str += "</div>";
+  return str;
+}
+
 // function to build quizz with video
 function buildFormVideo(question) {
+  console.log("build video");
   const output = [];
   const answers = [];
 
   for (let number in question.answers) {
     answers.push(`<div>${question.answers[number]}</div>`);
-  }
-
-  function buildVideo() {
-    var str = '<div class="container media">';
-    question.video.forEach(video => {
-      str += `<video controls width="250" autoplay src="${video}"></video>`;
-    });
-    str += "</div>";
-    return str;
   }
 
   output.push(
@@ -118,17 +121,18 @@ function buildFormVideo(question) {
              <h2>Question ${currentQuestionIndex + 1}</h2>
              <p>${question.question}</p>
            </div>
-           ${buildVideo()}
-           <div class="container time">
+           ${buildVideo(question.video)}
+           <div class="container" id="time">
              <div id=progress-time>
                <div class="gauge"></div>
+               <audio id="laugh" src="./MP3/evil-laugh.wav"></audio>
              </div>
            </div>
            <div class="container answers"> ${answers.join("")} </div>
            <div class="footer">
              <div class="score"><span>SCORE:</span>
-               <p class="right"><span>0</span>Correct</p>
-               <p class="wrong"><span>0</span>Wrong</p> 
+             <p class="right"><span id="rightCounter">${rightScoreCounter}</span>Correct</p>
+             <p class="wrong"><span id="wrongCounter">${wrongScoreCounter}</span>Wrong</p>  
           </div>
           <button id="btn_next">Next question</button>
         </main>`
@@ -147,13 +151,14 @@ function displayQuizz() {
 
   if (question.video) {
     htmlTemplate = buildFormVideo(question);
+    htmlTemplate += buildVideo(question.video, "fullScreen", "autoplay");
   } else if (question.image) {
     htmlTemplate = buildFormImages(question);
   } else if (question.audio) {
     htmlTemplate = buildFormAudio(question);
   }
-
-  if (!htmlTemplate) htmlTemplate = "<p>todo ... images/video/audio</p>";
+  /* 
+  if (!htmlTemplate) htmlTemplate = "<p>todo ... images/video/audio</p>"; */
 
   body.innerHTML += htmlTemplate;
 
@@ -169,59 +174,102 @@ function displayQuizz() {
   });
 
   buttonNext.addEventListener("click", () => {
+    stopGaugeInterval();
     currentQuestionIndex++;
     displayQuizz();
   });
 
   if (currentQuestionIndex === myQuestions.length - 1) {
     buttonNext.innerHTML = "Final Score";
-    buttonNext.onclick = () => location.replace("final-score.html");
+    buttonNext.onclick = () => {
+      localStorage.setItem("rightScore", rightScoreCounter);
+      localStorage.setItem("wrongScore", wrongScoreCounter);
+      location.replace("final-score.html");
+    };
   }
-  setGauge();
+
+  function launchTime(e) {
+    console.log("ended");
+    if (question.video)
+      document.querySelector(".container.media.fullScreen").remove();
+
+    setGauge();
+  }
+
+  if (question.video) {
+    document
+      .querySelectorAll("video")[1]
+      .addEventListener("ended", launchTime, false);
+  } else if (question.image) {
+    setGauge();
+  } else if (question.audio) {
+    document
+      .getElementById("audio")
+      .addEventListener("ended", launchTime, false);
+  }
 }
 
 // function to show right or wrong answer
 function displayAnswer(button, responseCorrect, responsePlayer) {
   if (responseCorrect === responsePlayer) {
     button.id = "correctAnswer";
+    rightScoreCounter++;
+    document.getElementById("rightCounter").innerHTML = rightScoreCounter;
+    // var timer = setInterval(setGauge);
+    // clearInterval(timer);
   } else {
     button.id = "wrongAnswer";
+    button.className = "shake-horizontal";
+    wrongScoreCounter++;
+    document.getElementById("wrongCounter").innerHTML = wrongScoreCounter;
   }
 }
 
+// function to set the gauge and display it
 function setGauge() {
   let time = 0;
   let vG = 255;
   let vR = 0;
   let gauge = document.querySelector(".gauge");
+
+  //change color every second from green to red
   const changeColor = () => {
-    vG -= 40;
-    vR += 40;
+    vG -= 30;
+    vR += 20;
     gauge.style.backgroundColor = `rgb(${vR},${vG},0)`;
-    // const randomNum = Math.round(Math.random() * 100);
   };
-  let intervalId = setInterval(() => {
-    if (time >= 10) {
-      clearInterval(intervalId);
-      return;
-    }
+
+  // count from 1 to 10
+  gaugeIntervalId = setInterval(() => {
     changeColor();
     let percentage = (time * 100) / 10;
     gauge.style.width = percentage + "%";
+    if (time >= 10) {
+      return laugh();
+    }
+
     time++;
   }, 1000);
-
-  if ((time = 10)) {
-    var containerTime = document.getElementsByClassName("time");
-  }
 }
 
-setGauge();
+function stopGaugeInterval() {
+  clearInterval(gaugeIntervalId);
+}
 
-// If myQuestions.video || audio => setTimeOut(temps de la video);
+function laugh() {
+  const laugh = document.getElementById("laugh");
+  laugh.addEventListener("ended", function() {
+    console.log("ended laugh");
+    laugh.pause();
+    laugh.currentTime = 0;
+    stopGaugeInterval();
+  });
+  laugh.play();
+}
 
-// If myQuestions.
+// setGauge();
 
-var rightAnswer = document.getElementsByClassName("right");
-var rightScore = rightAnswer.children;
-var wrongAnswer = document.getElementsByClassName("wrong");
+// Si l'internaute a cliqué sur une réponse stop le compteur.
+// Déclencher le timer quand l'audio ou video a fini de jouer.
+const exp = { rightScoreCounter, wrongScoreCounter };
+export default "yo";

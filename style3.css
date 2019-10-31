@@ -74,7 +74,8 @@ h2 {
 }
 
 .win,
-.loose {
+.lose,
+.even {
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -86,14 +87,15 @@ h2 {
 
 .button {
   text-decoration: none;
-  padding: 15px 40px;
+  padding: 20px 30px;
   border-radius: 0.5rem;
   color: white;
   font-size: 2rem;
   font-weight: 900;
   position: absolute;
   background: #f26322;
-  top: 450px;
   font-family: "Roboto";
   margin-top: 80px;
+  border: none;
+  top: 450px;
 }
