@@ -78,7 +78,7 @@
 
 body {
   font-family: Arial;
-  background-image: url(./IMAGE/background-dark.jpg);
+  background-image: url("./IMAGE/background-dark.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 60%;
