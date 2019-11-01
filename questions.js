@@ -123,6 +123,17 @@ const myQuestions = [
       a4: "A Saw"
     },
     correctAnswer: "A Hook"
+  },
+  {
+    question: "Who's this nice guy",
+    video: ["./VIDEO/norman-bates.mp4"],
+    answers: {
+      a1: "Norman Bates",
+      a2: "The Zodiac Killer",
+      a3: "Ted Bundy",
+      a4: "Jack The Ripper"
+    },
+    correctAnswer: "Norman Bates"
   }
 ];
 
