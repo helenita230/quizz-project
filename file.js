@@ -149,6 +149,7 @@ function displayQuizz() {
   const question = myQuestions[currentQuestionIndex];
   var htmlTemplate;
 
+  //build template
   if (question.video) {
     htmlTemplate = buildFormVideo(question);
     htmlTemplate += buildVideo(question.video, "fullScreen", "autoplay");
@@ -157,8 +158,6 @@ function displayQuizz() {
   } else if (question.audio) {
     htmlTemplate = buildFormAudio(question);
   }
-  /* 
-  if (!htmlTemplate) htmlTemplate = "<p>todo ... images/video/audio</p>"; */
 
   body.innerHTML += htmlTemplate;
 
@@ -173,6 +172,7 @@ function displayQuizz() {
     };
   });
 
+  //display next question
   buttonNext.addEventListener("click", () => {
     stopGaugeInterval();
     currentQuestionIndex++;
@@ -188,8 +188,8 @@ function displayQuizz() {
     };
   }
 
+  // launch gauge time
   function launchTime(e) {
-    console.log("ended");
     if (question.video)
       document.querySelector(".container.media.fullScreen").remove();
 
@@ -197,31 +197,11 @@ function displayQuizz() {
   }
 
   if (question.video) {
-    document
-      .querySelectorAll("video")[1]
-      .addEventListener("ended", launchTime, false);
+    document.querySelectorAll("video")[1].addEventListener("ended", launchTime);
   } else if (question.image) {
     setGauge();
   } else if (question.audio) {
-    document
-      .getElementById("audio")
-      .addEventListener("ended", launchTime, false);
-  }
-}
-
-// function to show right or wrong answer
-function displayAnswer(button, responseCorrect, responsePlayer) {
-  if (responseCorrect === responsePlayer) {
-    button.id = "correctAnswer";
-    rightScoreCounter++;
-    document.getElementById("rightCounter").innerHTML = rightScoreCounter;
-    // var timer = setInterval(setGauge);
-    // clearInterval(timer);
-  } else {
-    button.id = "wrongAnswer";
-    button.className = "shake-horizontal";
-    wrongScoreCounter++;
-    document.getElementById("wrongCounter").innerHTML = wrongScoreCounter;
+    document.getElementById("audio").addEventListener("ended", launchTime);
   }
 }
 
@@ -239,19 +219,19 @@ function setGauge() {
     gauge.style.backgroundColor = `rgb(${vR},${vG},0)`;
   };
 
-  // count from 1 to 10
+  // count from 1 to 8
   gaugeIntervalId = setInterval(() => {
     changeColor();
-    let percentage = (time * 100) / 10;
+    let percentage = (time * 100) / 7;
     gauge.style.width = percentage + "%";
-    if (time >= 10) {
+    if (time >= 7) {
       return laugh();
     }
-
     time++;
-  }, 1000);
+  }, 700);
 }
 
+// Stop the gauge
 function stopGaugeInterval() {
   clearInterval(gaugeIntervalId);
 }
@@ -267,9 +247,23 @@ function laugh() {
   laugh.play();
 }
 
-// setGauge();
+// function to show right or wrong answer
+function displayAnswer(button, responseCorrect, responsePlayer) {
+  if (responseCorrect === responsePlayer) {
+    button.id = "correctAnswer";
+    rightScoreCounter++;
+    document.getElementById("rightCounter").innerHTML = rightScoreCounter;
+    if (question.correctAnswer === responsePlayer) {
+      clearInterval(function() {
+        time = 0;
+      });
+    }
+  } else {
+    button.id = "wrongAnswer";
+    button.className = "shake-horizontal";
+    wrongScoreCounter++;
+    document.getElementById("wrongCounter").innerHTML = wrongScoreCounter;
+  }
+}
 
-// Si l'internaute a cliqué sur une réponse stop le compteur.
-// Déclencher le timer quand l'audio ou video a fini de jouer.
 const exp = { rightScoreCounter, wrongScoreCounter };
-export default "yo";

@@ -13,20 +13,16 @@
 
 const myQuestions = [
   {
-    question: "Which movie Wes Craven did NOT direct ?",
-    image: [
-      "./IMAGE/wes-craven.jpg",
-      "./IMAGE/wes-craven-2.jpg",
-      "./IMAGE/wes-craven-3.jpg",
-      "./IMAGE/maniac.jpg"
-    ],
+    question:
+      "If you don't want to be killed by Candyman, what should you NEVER do ?",
+    image: ["./IMAGE/candyman.jpg"],
     answers: {
-      a1: "Maniac",
-      a2: "The people under the Stars",
-      a3: "Deadly Blessing",
-      a4: "A Nightmare on Elm Street"
+      a1: "Sleep",
+      a2: "Say his name 5 times in front of the mirror",
+      a3: "Invoke his spirit in an Indian Cementary",
+      a4: "Never eat sugar after midnight"
     },
-    correctAnswer: "Maniac"
+    correctAnswer: "Say his name 5 times in front of the mirror"
   },
   {
     question:
@@ -34,28 +30,22 @@ const myQuestions = [
     video: ["./VIDEO/the-omen.mp4"],
     answers: {
       a1: "He's the son of the devil",
-      a2: "He has rose from the dead after being buried in a pet cementary",
-      a3:
-        "He's an alien who took form of a human being to take control of the earth",
+      a2: "He has risen from the dead after being buried in a pet cementary",
+      a3: "He's an alien who wants to take control of the earth",
       a4: "He sees dead people"
     },
     correctAnswer: "He's the son of the devil"
   },
   {
-    question: "Which movie has not been adapted from a Stephen King book ?",
-    image: [
-      "./IMAGE/christine.jpg",
-      "./IMAGE/cujo.jpg",
-      "./IMAGE/friday-13th.jpg",
-      "./IMAGE/pet-semetary.jpg"
-    ],
+    question: "Who directed this movie?",
+    image: ["./IMAGE/braindead.jpg"],
     answers: {
-      a1: "Friday the 13th",
-      a2: "Pet Semetary",
-      a3: "Christine",
-      a4: "Cujo"
+      a1: "Sam Raimi",
+      a2: "Peter Jackson",
+      a3: "Wes Craven",
+      a4: "John Carpenter"
     },
-    correctAnswer: "Friday the 13th"
+    correctAnswer: "Peter Jackson"
   },
   {
     question: "In which movie can we hear this line ?",
@@ -80,26 +70,26 @@ const myQuestions = [
     correctAnswer: "8"
   },
   {
-    question: "What's the name of the slasher in this movie ?",
-    image: ["./IMAGE/jason.jpg"],
+    question: "Who is he?",
+    image: ["./IMAGE/hellraiserr.jpg"],
     answers: {
-      a1: "Jason",
-      a2: "Michael Myers",
-      a3: "Hellraiser",
-      a4: "Freddy Kruger"
+      a1: "Pinhead",
+      a2: "Hellraiser",
+      a3: "Pinhell",
+      a4: "Eraser Head"
     },
-    correctAnswer: "Jason"
+    correctAnswer: "Pinhead"
   },
   {
     question: "In Which movie can we hear this music ?",
-    audio: ["./MP3/halloween.mp3"],
+    audio: ["./MP3/shining.mp3"],
     answers: {
-      a1: "Halloween",
-      a2: "The Exorcist",
+      a1: "Child's Play",
+      a2: "Amityville",
       a3: "Shining",
       a4: "The Thing"
     },
-    correctAnswer: "Halloween"
+    correctAnswer: "Shining"
   },
   {
     question: "What's the name of this movie?",
@@ -137,5 +127,3 @@ const myQuestions = [
 ];
 
 export default myQuestions;
-
-

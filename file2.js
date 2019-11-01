@@ -19,7 +19,7 @@ function displayCatchPhrase() {
   if (rightScore >= 5) {
     document.querySelector(
       ".score-number"
-    ).innerHTML += `<p class="win">You survived</p>`;
+    ).innerHTML += `<p class="win">You survived</p><audio autoplay src="./MP3/frankenstein.mp3"></audio>`;
   } else if (rightScore < 5) {
     document.querySelector(
       ".score-number"
