@@ -23,7 +23,7 @@ function displayCatchPhrase() {
   } else if (rightScore < 5) {
     document.querySelector(
       ".score-number"
-    ).innerHTML += `<p class="lose">You're dead...</p>`;
+    ).innerHTML += `<p class="lose">You're dead...</p><audio autoplay src="./MP3/sixth-sense.mp3"></audio>`;
   } else if (rightScore === 5) {
     document.querySelector(
       ".score-number"
