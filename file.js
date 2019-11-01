@@ -212,23 +212,23 @@ function setGauge() {
   let vR = 0;
   let gauge = document.querySelector(".gauge");
 
-  //change color every second from green to red
+  //change color
   const changeColor = () => {
-    vG -= 30;
-    vR += 20;
+    vG -= 15;
+    vR += 25;
     gauge.style.backgroundColor = `rgb(${vR},${vG},0)`;
   };
 
-  // count from 1 to 8
+  // count from 1 to 10
   gaugeIntervalId = setInterval(() => {
     changeColor();
-    let percentage = (time * 100) / 7;
+    let percentage = (time * 100) / 15;
     gauge.style.width = percentage + "%";
-    if (time >= 7) {
+    if (time >= 15) {
       return laugh();
     }
     time++;
-  }, 700);
+  }, 1000);
 }
 
 // Stop the gauge
@@ -248,15 +248,14 @@ function laugh() {
 }
 
 // function to show right or wrong answer
+
 function displayAnswer(button, responseCorrect, responsePlayer) {
   if (responseCorrect === responsePlayer) {
     button.id = "correctAnswer";
     rightScoreCounter++;
     document.getElementById("rightCounter").innerHTML = rightScoreCounter;
     if (question.correctAnswer === responsePlayer) {
-      clearInterval(function() {
-        time = 0;
-      });
+      //stopGaugeInterval();
     }
   } else {
     button.id = "wrongAnswer";
