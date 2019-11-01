@@ -201,7 +201,7 @@ function displayQuizz() {
   } else if (question.image) {
     setGauge();
   } else if (question.audio) {
-    document.getElementById("audio").addEventListener("ended", launchTime);
+    setGauge();
   }
 }
 
