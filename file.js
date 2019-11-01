@@ -254,14 +254,13 @@ function displayAnswer(button, responseCorrect, responsePlayer) {
     button.id = "correctAnswer";
     rightScoreCounter++;
     document.getElementById("rightCounter").innerHTML = rightScoreCounter;
-    if (question.correctAnswer === responsePlayer) {
-      //stopGaugeInterval();
-    }
+    stopGaugeInterval();
   } else {
     button.id = "wrongAnswer";
     button.className = "shake-horizontal";
     wrongScoreCounter++;
     document.getElementById("wrongCounter").innerHTML = wrongScoreCounter;
+    stopGaugeInterval();
   }
 }
 
