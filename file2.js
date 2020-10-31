@@ -12,6 +12,8 @@ document.querySelector("main").innerHTML = `<h1>Halloween Movie Quizz</h1>
   </div>
 </div>`;
 
+
+
 displayCatchPhrase();
 // function for the final-score html
 function displayCatchPhrase() {
